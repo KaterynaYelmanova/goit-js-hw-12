@@ -18,23 +18,22 @@ inputQuery.addEventListener('input', e => {
 });
 
 const searchButton = document.getElementById('search-button');
-searchButton.addEventListener('click', () => {
+searchButton.addEventListener('click', async () => {
   if (query && query.length >= 3) {
     displayLoader();
 
-    fetchImages(query)
-      .then(data => {
-        renderImages(data);
-        inputQuery.value = '';
-      })
-      .catch(error => {
-        iziToast.error({
-          title: 'Error',
-          message: `Sorry, there are no images matching your search query. Please try again!`,
-          position: 'topRight',
-        });
-        inputQuery.value = '';
+    try {
+      const data = await fetchImages(query);
+      renderImages(data);
+      inputQuery.value = '';
+    } catch (error) {
+      iziToast.error({
+        title: 'Error',
+        message: `Sorry, there are no images matching your search query. Please try again!`,
+        position: 'topRight',
       });
+      inputQuery.value = '';
+    }
   } else {
     iziToast.info({
       title: 'Info',

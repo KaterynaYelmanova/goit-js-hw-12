@@ -149,3 +149,8 @@
 .next-page-btn:focus {
   background-color: #6c8cff;
 }
+
+.hidden {
+  display: none;
+  opacity: 0;
+}
